@@ -1,33 +1,29 @@
-
-const {
-    DB_HOST,
-    DB_DATABASE,
-    DB_USER,
-    DB_PASSWORD
-} = process.env;
-
-
-
 const Sequelize = require('sequelize');
 
-const db = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
-    host: DB_HOST,
-    pool: {
-        max: 10,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    },
-    dialect: postgres,
-    dialectOptions: {
-        options: {
-            useUTC: false,
-            dateFirst: 1,
-        }
-    },
-    define: {
-        timestamps: false
-    }
-});
+// const dbConfig = {
+//     "username": "test",
+//     "password": "test",
+//     "database": "test",
+//     "host": "localhosе",
+//     "dialect": "postgres"
+// }
 
-module.exports = db;
+// const db = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
+
+const sequelize = new Sequelize("TEST", "SA", "fakePassw0rd", {
+    dialect: "mssql",
+    host: "localhost"
+  });
+
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.')
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err)
+  })
+
+
+module.exports = sequelize;

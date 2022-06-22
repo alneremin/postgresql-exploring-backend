@@ -18,16 +18,16 @@ const logger = require('./utils/logger');
 
 // Load .env Enviroment Variables to process.env
 
-require('mandatoryenv').load([
-    'DB_HOST',
-    'DB_DATABASE',
-    'DB_USER',
-    'DB_PASSWORD',
-    'PORT',
-    'SECRET'
-]);
+// require('mandatoryenv').load([
+//     'DB_HOST',
+//     'DB_DATABASE',
+//     'DB_USER',
+//     'DB_PASSWORD',
+//     'PORT',
+//     'SECRET'
+// ]);
 
-const { PORT, HOST } = process.env;
+// const { PORT, HOST } = process.env;
 
 
 // Instantiate an Express Application
@@ -85,6 +85,8 @@ app.use((req, res, next) => {
 // });
 
 app.use('/public', express.static(__dirname + '/public'))
+const PORT=8888
+const HOST="localhost"
 
 // Open Server on selected Port
 app.listen(

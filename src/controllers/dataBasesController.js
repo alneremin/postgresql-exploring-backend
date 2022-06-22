@@ -1,15 +1,14 @@
 const express = require('express')
-const service = require("../services/tableService")
+const service = require("../services/dataBaseService")
 
 const router = express.Router()
 
-router.get("/tables", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    console.log(req.query);
-    let result = service.getTableSettings()
+    let result = await service.getBaseStatus()
 
     return res.status(result.status).send(result)
-    
+
   } catch (error) {
     next(error)
   }
