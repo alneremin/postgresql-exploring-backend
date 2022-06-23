@@ -19,4 +19,8 @@ class Enum {
     }
 }
 
-
+exports.DATABASE_STATUS = new Enum({
+    off: "Off",
+    load: "Load",
+    on: "On"
+})

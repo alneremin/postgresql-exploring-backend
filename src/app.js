@@ -11,10 +11,10 @@ inject(); // Patch express in order to use async / await syntax
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const helmet = require('helmet');
 
-
-const logger = require('./utils/logger');
+const configureShutdown = require("./config/shutdownConfig")
+const logging = require('./middleware/logging');
+const errorHandling = require('./middleware/errorHandling')
 
 // Load .env Enviroment Variables to process.env
 
@@ -43,7 +43,8 @@ const app = express();
 // app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
 
 // Configure custom logger middleware
-app.use(logger.dev, logger.combined);
+app.use(logging);
+app.use(errorHandling);
 
 // app.use(cookieParser());
 // app.use(helmet());
@@ -56,9 +57,6 @@ app.use(logger.dev, logger.combined);
 // })
 
 app.use(cors());
-
-// Handle errors
-app.use(errorHandler());
 
 configureApi(app)
 
@@ -89,7 +87,9 @@ const PORT=8888
 const HOST="localhost"
 
 // Open Server on selected Port
-app.listen(
+const server = app.listen(
     PORT, HOST,
     () => console.info('Server listening on port', PORT)
 );
+
+configureShutdown(server)

@@ -1,0 +1,7 @@
+const path = require('path');
+
+module.exports = {
+  'config': process.env.MIG_ENV === 'development' ? path.resolve('config', 'sequelize-config.json') : path.resolve('src', 'config', 'sequelize-config.json'),
+  'migrations-path': path.resolve('migrations'),
+  'env': process.env.MIG_ENV || 'local'
+}

@@ -1,0 +1,61 @@
+{
+    "MySQL": {
+        "username": "test",
+        "password": "test",
+        "database": "test",
+        "host": "localhost",
+        "dialect": "mysql",
+        "port": "3306",
+        "reconnect": true,
+        "dialectOptions": {
+            "decimalNumbers": true
+        },
+        "define": {
+            "freezeTableName": true
+        }
+    },
+    "MSSQL": {
+        "username": "TEST",
+        "password": "SA",
+        "database": "fakePassw0rd",
+        "host": "localhost",
+        "dialect": "mssql",
+        "reconnect": true,
+        "dialectOptions": {
+            "decimalNumbers": true
+        },
+        "define": {
+            "freezeTableName": true
+        }
+    },
+    "MariaDB": {
+        "username": "test",
+        "password": "test1",
+        "database": "test",
+        "host": "localhost",
+        "dialect": "mariadb",
+        "port": "3808", 
+        "reconnect": true,
+        "dialectOptions": {
+            "decimalNumbers": true
+        },
+        "define": {
+            "freezeTableName": true
+        }
+    },
+    "PostgreSQL": {
+        "username": "test",
+        "password": "test",
+        "database": "test",
+        "host": "localhost",
+        "dialect": "postgres",
+        "reconnect": true,
+        "port": "5432", 
+        "dialectOptions": {
+            "decimalNumbers": true
+        },
+        "define": {
+            "freezeTableName": true
+        }
+    }
+}

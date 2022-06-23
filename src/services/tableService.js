@@ -14,20 +14,20 @@ exports.getTableSettings = () => {
                 order: 0
             }, 
             {
-                name: "Проверяемые метрики",
-                propertyName: "metrics",
+                name: "Метрика",
+                propertyName: "metricName",
                 width: 300,
                 order: 1
             },
             {
                 name: "Время проверки",
-                propertyName: "checkTime",
+                propertyName: "createDate",
                 width: 200,
                 order: 2
             },
             {
-                name: "Результаты",
-                propertyName: "results",
+                name: "Значение метрики",
+                propertyName: "metricValue",
                 width: 327,
                 order: 3
             }

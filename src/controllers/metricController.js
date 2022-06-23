@@ -1,11 +1,11 @@
 const express = require('express')
-const service = require("../services/dataBaseService")
+const service = require("../services/metricService")
 
 const router = express.Router()
 
 router.get("/", async (req, res, next) => {
   try {
-    let result = await service.getBaseStatus()
+    let result = await service.getMetrics()
 
     return res.status(result.status).send(result)
 
