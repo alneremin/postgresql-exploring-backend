@@ -2,7 +2,7 @@
     "MySQL": {
         "username": "test",
         "password": "test",
-        "database": "test",
+        "database": "testing",
         "host": "localhost",
         "dialect": "mysql",
         "port": "3306",
@@ -15,9 +15,9 @@
         }
     },
     "MSSQL": {
-        "username": "TEST",
-        "password": "SA",
-        "database": "fakePassw0rd",
+        "username": "test",
+        "password": "test",
+        "database": "testing",
         "host": "localhost",
         "dialect": "mssql",
         "reconnect": true,
@@ -30,8 +30,8 @@
     },
     "MariaDB": {
         "username": "test",
-        "password": "test1",
-        "database": "test",
+        "password": "test",
+        "database": "testing",
         "host": "localhost",
         "dialect": "mariadb",
         "port": "3808", 
@@ -46,11 +46,11 @@
     "PostgreSQL": {
         "username": "test",
         "password": "test",
-        "database": "test",
+        "database": "testing",
         "host": "localhost",
         "dialect": "postgres",
         "reconnect": true,
-        "port": "5432", 
+        "port": "5431", 
         "dialectOptions": {
             "decimalNumbers": true
         },

@@ -3,16 +3,16 @@ const path = require('path')
 const { Sequelize, DataTypes, QueryTypes, Transaction } = require('sequelize')
 const db = {}
 const basename = path.basename(__filename)
+const dbConfig = require('../config/databases.json');
 
 const env = 'development'
 
 const db_config = require(path.join(__dirname + '/../config/sequelize-config.json'))[env]
 
 const cls = require('cls-hooked')
+const logemitter = require('../events/logemitter')
 
 const ns = cls.createNamespace('models')
-
-Sequelize.useCLS(ns)
 
 let sequelize = new Sequelize(db_config.database, db_config.username, db_config.password, db_config)
 
@@ -62,6 +62,25 @@ db.query = (query, options) => {
 
 db.select = (query) => {
   return db.sequelize.query(query, { type: QueryTypes.SELECT, raw: true})
+}
+
+db.transaction = (callback) => {
+
+  return db.sequelize.transaction({
+    isolationLevel: db.Transaction.ISOLATION_LEVELS.SERIALIZABLE
+  }, callback)
+}
+
+db.databases = {}
+
+for (const name in dbConfig) {
+  const props = dbConfig[name]
+  props.benchmark = true
+  props.logging = function () {
+    logemitter.emit('benchmark', arguments[1])
+    // console.log('logging',arguments);
+  }
+  db.databases[name] = new Sequelize(props.database, props.username, props.password, props)
 }
 
 module.exports = db;

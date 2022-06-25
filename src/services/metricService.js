@@ -10,3 +10,9 @@ exports.getMetrics = async () => {
     const metrics = await db.Metric.findAll()
     return new Result().setResult(metrics)
 }
+
+exports.getActions = async () => {
+    
+    const actions = await db.Action.findAll()
+    return new Result().setResult(actions)
+}

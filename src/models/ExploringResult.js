@@ -36,6 +36,14 @@ module.exports = (sequelize, Sequelize) => {
         createDate: {
             type: Sequelize.DATE,
         },
+
+        taskId: {
+            type: Sequelize.UUID,
+            references: {
+              model: "ExploringTask",
+              key: "id"
+            }
+        }
     }, {
         timestamps: false
     })

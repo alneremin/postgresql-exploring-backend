@@ -10,17 +10,23 @@ exports.getTableSettings = () => {
             {
                 name: "Наименование СУБД",
                 propertyName: "databaseName",
-                width: 400,
+                width: 240,
                 order: 0
             }, 
             {
                 name: "Метрика",
                 propertyName: "metricName",
-                width: 300,
+                width: 250,
                 order: 1
             },
             {
-                name: "Время проверки",
+                name: "Статус",
+                propertyName: "status",
+                width: 200,
+                order: 2
+            },
+            {
+                name: "Время начала проверки",
                 propertyName: "createDate",
                 width: 200,
                 order: 2

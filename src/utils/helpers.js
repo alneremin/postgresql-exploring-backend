@@ -7,3 +7,9 @@ module.exports.dataToJson = data => {
     return data.toJSON()
   }
 }
+
+module.exports.sleep = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}

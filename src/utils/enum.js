@@ -24,3 +24,16 @@ exports.DATABASE_STATUS = new Enum({
     load: "Load",
     on: "On"
 })
+
+exports.RESULT_STATUS = new Enum({
+    progress: "Выполняется",
+    complete: "Завершено",
+    error: "Ошибка",
+})
+
+exports.EXPLORING_ACTIONS = new Enum({
+    simpleWrite: "Простая вставка",
+    simpleRead: "Простое чтение",
+    difficultWrite: "Сложная вставка",
+    difficultRead: "Сложное чтение",
+})

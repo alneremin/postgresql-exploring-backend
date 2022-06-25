@@ -14,4 +14,15 @@ router.get("/", async (req, res, next) => {
   }
 })
 
+router.get("/action", async (req, res, next) => {
+  try {
+    let result = await service.getActions()
+
+    return res.status(result.status).send(result)
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router

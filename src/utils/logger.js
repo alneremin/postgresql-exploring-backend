@@ -22,7 +22,7 @@ const consoleTransport = new transports.Console({
   format: combine(timestamp(), colorize(), align(), myFormat)
 })
 
-const commonOptions = [consoleTransport, new DailyRotateFile(commonLoggerConfig)]
+const commonOptions = [new DailyRotateFile(commonLoggerConfig)]
 
 const options = {
   transports: [...commonOptions]

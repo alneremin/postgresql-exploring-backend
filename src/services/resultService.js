@@ -1,9 +1,7 @@
 const Result = require("../utils/result")
-const { Sequelize, DataTypes, QueryTypes, Transaction } = require('sequelize')
-const dbConfig = require('../config/databases.json');
-const { DATABASE_STATUS } = require("../utils/enum");
-const logger = require("../utils/logger");
+const { RESULT_STATUS } = require("../utils/enum");
 const db = require('../models')
+const moment = require('moment')
 
 exports.getResult = async (query) => {
     
@@ -30,11 +28,50 @@ exports.getResult = async (query) => {
             ds.name as "databaseName",
             m.name as "metricName",
             er."createDate",
-            er."metricValue"
+            er.status,
+            er."metricValue",
+            et."actionId",
+            a.name as "action",
+            et."rowCount"
         from "ExploringResult" er
         join "Metric" m on m.id=er."metricId"
         join "DatabaseSystem" ds on ds.id=er."databaseId"
+        join "ExploringTask" et on et.id=er."taskId"
+        join "Action" a on a.id=et."actionId"
         ${condition}
+        order by er."createDate" desc
     `)
     return new Result().setResult(metrics)
+}
+
+exports.compareDatabase = async (body) => {
+    
+    if (!body.databaseIds?.length) {
+        return new Result().setErrorAndStatus(405, "Не задано СУБД для анализа")
+    }
+
+    if (!body.metricIds?.length) {
+        return new Result().setErrorAndStatus(405, "Не заданы метрики для анализа")
+    }
+    if (!body.actionIds?.length) {
+        return new Result().setErrorAndStatus(405, "Не заданы действия для анализа")
+    }
+
+    const tasks = body.metricIds.map(metricId => {
+        body.actionIds.map(actionId => {
+            return {
+                metricId,
+                actionId,
+                rowCount: body.rowCount,
+                databaseId: body.databaseIds[0],
+                status: RESULT_STATUS.progress,
+                createDate: moment(),
+            }
+        })
+    })
+
+    await db.ExploringTask.bulkCreate(tasks)
+    await db.ExploringResult.bulkCreate(tasks)
+
+    return this.getResult({metric: body.metricIds.reduce((acc, val) => acc + ';' + val)})
 }

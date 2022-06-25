@@ -6,6 +6,7 @@
         "database": "postgresexp",
         "host": "localhost",
         "dialect": "postgres",
+        "logging": false,
         "reconnect": true,
         "dialectOptions": {
             "decimalNumbers": true

@@ -14,4 +14,15 @@ router.get("/", async (req, res, next) => {
   }
 })
 
+router.post("/", async (req, res, next) => {
+  try {
+    let result = await service.compareDatabase(req.body)
+
+    return res.status(result.status).send(result)
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
