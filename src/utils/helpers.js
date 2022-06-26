@@ -13,3 +13,7 @@ module.exports.sleep = (ms) => {
     setTimeout(resolve, ms);
   });
 }
+
+module.exports.onlyUnique = (value, index, self) => {
+  return self.indexOf(value) === index;
+}

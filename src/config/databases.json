@@ -16,7 +16,7 @@
     },
     "MSSQL": {
         "username": "test",
-        "password": "test",
+        "password": "pass123pass!",
         "database": "testing",
         "host": "localhost",
         "dialect": "mssql",
