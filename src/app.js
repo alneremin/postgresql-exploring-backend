@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 app.use('/public', express.static(__dirname + '/public'))
 const PORT=8889
-const HOST="192.168.0.111"
+const HOST="localhost"
 
 // Open Server on selected Port
 const server = app.listen(
