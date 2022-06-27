@@ -67,15 +67,17 @@ exports.addTask = async (body) => {
     const tasks = []
     for (const metricId of body.metricIds) {
         for (const actionId of body.actionIds) {
-            tasks.push({
-                taskId: uuidv4(),
-                metricId,
-                actionId,
-                rowCount: body.rowCount,
-                databaseId: body.databaseIds[0],
-                status: RESULT_STATUS.progress,
-                createDate: moment(),
-            })
+            for (const databaseId of body.databaseIds) {
+                tasks.push({
+                    taskId: uuidv4(),
+                    metricId,
+                    actionId,
+                    rowCount: body.rowCount,
+                    databaseId,
+                    status: RESULT_STATUS.progress,
+                    createDate: moment(),
+                })
+            }
         }
     }
 
@@ -125,6 +127,7 @@ exports.compareDatabase = async (body) => {
         where er."databaseId" in (
             ${body.databaseIds.map(d => `'${d}'`).reduce((acc, val) => acc + ' , ' + val)}
         )
+        and er.status = '${RESULT_STATUS.complete}'
         order by er."createDate" desc
     `)
     
@@ -135,26 +138,29 @@ exports.compareDatabase = async (body) => {
 
         for (const metric of metrics) {
             const metricData = positions.filter(p => p.actionId == metric.actionId && 
-                                    p.metricId == metric.metricId && rowCount == p.rowCount)
+                                    p.metricId == metric.metricId && rowCount == p.rowCount &&
+                                    body.databaseIds.includes(p.databaseId))
             
-            const dbms1 = metricData.filter(p => body.databaseIds[0] == p.databaseId)    
-            .sort((a,b) => moment(a.createDate) > moment(b.createDate))[0]
+            if (metricData.length) {
 
-            const dbms2 = metricData.filter(p => body.databaseIds[1] == p.databaseId)    
-            .sort((a,b) => moment(a.createDate) > moment(b.createDate))[0]
-            
-            if (dbms1?.metricValue || dbms2?.metricValue) {
-                results.push({
+                const data = {
                     metric: metric.metricName,
                     action: metric.actionName,
                     rowCount,
-                    dbmsId1: body.databaseIds[0],
-                    dbms1: dbms1?.metricValue ?? '-',
-                    dbmsName1: databases.find(d => d.id == body.databaseIds[0]).name,
-                    dbmsId2: body.databaseIds[1],
-                    dbms2: dbms2?.metricValue ?? '-',
-                    dbmsName2: databases.find(d => d.id == body.databaseIds[1]).name,
+                    dbInfo: []
+                }
+
+                body.databaseIds.forEach((databaseId, i) => {
+                    key = databases.find(d => d.id == databaseId).name
+                    data.dbInfo.push({
+                        dbmsValue: metricData.filter(p => databaseId == p.databaseId)    
+                        .sort((a,b) => moment(a.createDate) > moment(b.createDate))[0]?.metricValue ?? '-',
+                        dbmsName: key,
+                        dbmsId: databaseId
+                    })
                 })
+
+                results.push(data)
             }
             
         }

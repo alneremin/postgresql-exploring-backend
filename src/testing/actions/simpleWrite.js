@@ -3,14 +3,8 @@ const moment = require('moment')
 
 module.exports = async (db, rowCount) => {
 
-    const data = []
-    for (let i = 0; i < rowCount; i++) {
-        data.push({
-            name: "Jack London",
-            dateOfDeath: moment(),
-            dateOfBirth: moment(),
-            birthplace: "somewhere"
-        })
-    }
-    await db.Author.bulkCreate(data)
+    await db.Author.bulkCreate(db.Author.getTestData(rowCount))
+    await db.Country.bulkCreate(db.Country.getTestData(rowCount))
+    await db.Genre.bulkCreate(db.Genre.getTestData(rowCount))
+    await db.Publisher.bulkCreate(db.Publisher.getTestData(rowCount))
 }

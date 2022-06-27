@@ -34,7 +34,7 @@
         "database": "testing",
         "host": "localhost",
         "dialect": "mariadb",
-        "port": "3808", 
+        "port": "3305", 
         "reconnect": true,
         "dialectOptions": {
             "decimalNumbers": true
@@ -51,6 +51,16 @@
         "dialect": "postgres",
         "reconnect": true,
         "port": "5431", 
+        "dialectOptions": {
+            "decimalNumbers": true
+        },
+        "define": {
+            "freezeTableName": true
+        }
+    },
+    "SQLITE3": {
+        "dialect": "sqlite",
+        "storage": "./database.sqlite3", 
         "dialectOptions": {
             "decimalNumbers": true
         },

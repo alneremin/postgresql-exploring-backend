@@ -66,21 +66,21 @@ exports.getTableSettings = () => {
             {
                 name: "Действие",
                 propertyName: "action",
-                width: 100,
+                width: 200,
                 order: 2
             },
             {
                 name: "СУБД №1",
-                propertyName: "dbms1",
-                width: 150,
+                propertyName: "dbmsValue",
+                width: 175,
                 order: 1
             },
             {
                 name: "СУБД №2",
-                propertyName: "dbms2",
-                width: 150,
-                order: 2
-            }
+                propertyName: "dbmsValue",
+                width: 175,
+                order: 1
+            },
         ]
     })
 }

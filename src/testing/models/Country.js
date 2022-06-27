@@ -1,48 +1,40 @@
 'use strict'
+
 const moment = require('moment')
 const uuidv4 = require('uuid').v4 
 
 module.exports = (sequelize, Sequelize) => {
-    const Author = sequelize.define("Author", {
+    const Country = sequelize.define("Country", {
         id: {
             allowNull: false,
             primaryKey: true,
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4
         },
-  
+
+        code: {
+        type: Sequelize.STRING
+        },
+
         name: {
-            type: Sequelize.STRING
+        type: Sequelize.STRING
         },
   
-        dateOfBirth: {
-            type: Sequelize.DATE
-        },
-  
-        dateOfDeath: {
-          type: Sequelize.DATE
-        },
-  
-        birthplace: {
-          type: Sequelize.STRING
-        },
     }, {
         timestamps: false
     })
 
-    Author.getTestData = (rowCount) => {
+    Country.getTestData = (rowCount) => {
         const data = []
         for (let i = 0; i < rowCount;i++){
             data.push({
                 id: uuidv4(),
-                name: "Jack Paris",
-                dateOfDeath: moment(),
-                dateOfBirth: moment().set('year', 1800),
-                birthplace: "somewhere"
+                name: "Neverland",
+                code: "888"
             })
         }
         return data
     }
 
-    return Author
+    return Country
 }

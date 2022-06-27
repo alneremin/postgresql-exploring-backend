@@ -1,16 +1,22 @@
 const cron =  require("node-cron");
 const logger = require("../utils/logger");
 const db = require('../models');
-const { RESULT_STATUS } = require("../utils/enum");
+const { RESULT_STATUS, DATABASE_STATUS } = require("../utils/enum");
 const { Op } = require("sequelize");
 const analyzeService = require("../services/analyzeService");
+const { getDatabaseStatus } = require("../services/databaseService");
 
 async function analyze() {
     try {
+        const statuses = await getDatabaseStatus()
 
         const results = await db.ExploringResult.findAll({
-            where: {status: {[Op.not]: RESULT_STATUS.complete}},
-            limit: 5
+            where: {
+              status: {[Op.not]: RESULT_STATUS.complete},
+              databaseId: statuses.result.filter(s => s.status == DATABASE_STATUS.on)
+              .map(s => s.id)
+            },
+            limit: 5,
         })
 
         await db.transaction(async (transaction) => {
@@ -45,3 +51,5 @@ async function analyze() {
 const task = cron.schedule('* * * * *', analyze, { scheduled: false });
 
 module.exports = task;
+
+analyze()
